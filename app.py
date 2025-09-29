@@ -1,23 +1,23 @@
-from flask import Flask, request
+from flask import Flask, request,render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return {"message": "Day 3 – Learning POST requests!"}
+    return render_template('home.html',name="Arham")
+
+@app.route('/profile/<username>')
+def profile(username):
+    return render_template('profile.html',username=username)
+
 
 # Route to accept data from user
 @app.route('/greet', methods=['GET', 'POST'])
 def greet():
     if request.method == 'POST':
         name = request.form.get('name')
-        return {"message": f"Hello {name}, welcome to Flask Day 3!"}
-    return '''
-        <form method="POST">
-            <input type="text" name="name" placeholder="Enter your name" />
-            <input type="submit" value="Greet Me" />
-        </form>
-    '''
+        return {"message": f"Hello {name}"}
+    return render_template('greet.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -28,13 +28,7 @@ def login():
             return {"message": f"Hello {username}, good to see you again!", "status": "Login successful"}
         else:
             return {"status":"Invalid username or password"  }
-    return '''
-        <form method="POST">
-            <input type="text" name="username" placeholder="Enter your username" />
-            <input type="password" name="password" placeholder="Enter your password" />
-            <input type="submit" value="Login" />
-        </form>
-    '''
+    return render_template('login.html')
 
 @app.route('/square', methods=['GET', 'POST'])
 def square():
@@ -44,12 +38,13 @@ def square():
             return {"input": square_number, "square": square_number * square_number}
         except (ValueError, TypeError):
             return {"error": "Please enter a valid number"}
-    return '''
-        <form method="POST">
-            <input type="text" name="squareNumber" placeholder="Enter a number" />
-            <input type="submit" value="Square" />
-        </form>
-    '''
+    return render_template("square.html")
+
+@app.route('/cube/<int:number>')
+def cube(number):
+    org=number
+    number = number*number*number
+    return render_template("cube.html", number=number,org=org)
 
 if __name__ == '__main__':
     app.run(debug=True)
