@@ -46,5 +46,16 @@ def cube(number):
     number = number*number*number
     return render_template("cube.html", number=number,org=org)
 
+@app.route('/age/<int:age>')
+def age(age):
+    return render_template('age.html', age=age,name="Arham")
+
+@app.route('/friends')
+def friends():
+    return render_template('friends.html',friends=['Arham','Asad','Ibrahim'])
+
+@app.route('/number')
+def number():
+    return render_template('numbers.html',numbers=[1,2,3,4,5,6,7,8,9])
 if __name__ == '__main__':
     app.run(debug=True)
