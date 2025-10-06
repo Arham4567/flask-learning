@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template,redirect,url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
@@ -14,15 +14,18 @@ class FeedbackForm(FlaskForm):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('home.html')
 
 
 @app.route('/feedback',methods=("GET","POST"))
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
-        return f"welcome {form.username.data}!,thank you for your feedback message {form.message.data}"
-    return render_template('feedback.html', form=form)
+        return redirect(url_for('thank_you', username=form.username.data))
+    return render_template('feedback.html',form=form)
 
+@app.route("/thank_you/<username>")
+def thank_you(username):
+    return render_template('thank_you.html',username=username)
 if __name__ == '__main__':
     app.run(debug=True ,port=3001)
