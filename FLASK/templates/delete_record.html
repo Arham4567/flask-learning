@@ -1,0 +1,12 @@
+{% extends "baseindex.html" %}
+{% block title %}Delete_Database Page{% endblock %}
+
+{% block content %}
+<body>
+<form method="post">
+  {{form.hidden_tag()}}
+    <p>{{form.id.label}}{{form.id()}}</p>
+    <p>{{form.submit()}}</p>
+</form>
+</body>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "baseindex.html" %}
+{% block content %}
+<body>
+    <h2>All Feedback</h2>
+    <ul>
+        {% for f in feedbacks %}
+        <li><strong>{{f.id}} - {{ f.username }}</strong> - {{ f.message }} - {{f.email}}</li>
+        {% endfor %}
+    </ul>
+</body>
+{% endblock %}
